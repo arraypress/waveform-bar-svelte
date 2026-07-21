@@ -50,6 +50,13 @@ describe('WaveformBar (Svelte)', () => {
 		expect(init).toHaveBeenCalledWith(config);
 	});
 
+	it('forwards crossOrigin through to init() verbatim', async () => {
+		const config = { crossOrigin: 'anonymous' as const };
+		render(WaveformBar, { props: { config } });
+		await vi.waitFor(() => expect(init).toHaveBeenCalledTimes(1));
+		expect(init).toHaveBeenCalledWith(config);
+	});
+
 	it('re-inits when the config shape changes', async () => {
 		const { rerender } = render(WaveformBar, { props: { config: { continuous: true } } });
 		await vi.waitFor(() => expect(init).toHaveBeenCalledTimes(1));
